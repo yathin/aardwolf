@@ -1,0 +1,40 @@
+Aardwolf Camera Trap Data Management
+====================================
+
+0. About
+--------
+Aardwolf is a software program for management of camera trap data in ecological studies. Its intended users are ecologists, biologists and others who use a large number of cameras to study wildlife (or anything else) and need a software program to effieciently tag photographs and extract metadata.  
+
+1. History
+----------
+Aardwolf was designed to manage data from 26 camera traps that were setup in the Etosha National Park to survey herbivore grazing activity on carcass sites. The study was started in 2010 and ended in 2013 and produced 1.2 million photographs for researchers. Aardwolf was originally developed as a web application, but the demand to use it on "field" machines meant that it was practical to have a desktop version that can be run on any major operating system. 
+
+
+2. Nomenclature
+---------------
+The Aardwolf (Proteles cristata) is a small mammal related to the hyenas. It is an insectivorous mammal that specializes in eating termites and other insects, and can consume hundreds of thousands of them each night. It is an animal that is thought to be common but is rarely seen because of its strictly nocturnal routine. It's habit of "managing" mounds of termites is the inspiration being naming this software Aardwolf, as it is intended to manage "mounds" of camera trap images that is becoming common in large camera trap studies. 
+
+3. Building and Installing
+--------------------------
+Aardwolf is written in C++ using QT Creator 2.7.2 with QT 4.8.5 libraries. To build this project you will also need Qxt (libqxt.org), exiv2 (exiv2.org) and their dependencies. Windows setup binaries are available on (https://sourceforge.net/p/aardwolf/). 
+
+4. Usage
+--------
+    * Create Project (choose XMP option if you want the program to write metadata into the image file itself)
+    * Add Camera(s)
+    * Add Tag Groups (and tags)
+    * Download images into camera(s).
+        - You can download images into partitions that can be setup/managed via Partition Manager in the Project menu. This helps distributing image files over multiple drives, if necessary.  
+    * Select image and tag. (Tip: Use filmstrip mode to tag quickly using keyboard shortcuts).
+    * NOTE: If a folder contains more than 100 images, Aardwolf splits them into multiple pages with each page having a maximum of 100 images. The spinner on the bottom-right controls pages
+    * Select multiple images via mouse click with following options:
+        - Ctrl + Mouse  -> Add image to selected list
+        - Shift + Mouse -> Select images from first selected image (lowest index) to current click
+        - Alt + Mouse   -> Group select (if you're using automatic groupers. Currently there's only a time-based grouper that groups images together if it's immediate neighbors are within 5 seconds)
+    * View Reports to see state of project (there are three sample reports, but can be customized via SQL queries).
+    * View Data and export to CSV.
+    * Search tags, full tags or pattern matching supported by SQLite (http://www.sqlite.org/lang_expr.html).
+    * Filter folders / files based on their tag status. 
+
+
+

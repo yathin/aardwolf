@@ -1,0 +1,934 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1426</width>
+    <height>841</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Aardwolf - Camera Trap Data Management</string>
+  </property>
+  <widget class="QWidget" name="Aardwolf">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" colspan="2">
+     <widget class="QFrame" name="historyBar">
+      <property name="minimumSize">
+       <size>
+        <width>800</width>
+        <height>42</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>42</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">padding: 0px</string>
+      </property>
+      <widget class="QFrame" name="limooControl">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>720</x>
+         <y>0</y>
+         <width>161</width>
+         <height>42</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 0px</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QSlider" name="thumbnailSize">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>10</y>
+          <width>200</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Thanks to Dave Smith via: http://thesmithfam.org/blog/2010/03/10/fancy-qslider-stylesheet/ */
+
+QSlider::groove:horizontal {
+border: 1px solid #bbb;
+background: white;
+height: 2px;
+border-radius: 1px;
+}
+
+QSlider::handle:horizontal {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #eee, stop:1 #ccc);
+border: 1px solid #777;
+width: 3px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius: 0px;
+}
+
+QSlider::handle:horizontal:hover {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #fff, stop:1 #ddd);
+border: 1px solid #444;
+border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}</string>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="zoomLabel">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>5</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="aardwolf.qrc">:/Oxygen/Files/icons/oxygen/Actions-page-zoom-icon.png</pixmap>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="searchText">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>151</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="placeholderText">
+         <string>Enter search term</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="search">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>10</y>
+          <width>114</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Search</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QToolBox" name="AardwolfTools">
+      <property name="minimumSize">
+       <size>
+        <width>250</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>400</width>
+        <height>1000</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> QToolBox::tab {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                 stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+     border-radius: 5px;
+     color: black;
+ }
+
+ QToolBox::tab:selected { /* italicize selected tabs */
+     font: bold;
+     color: black;
+ }</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tagsPage">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>290</width>
+         <height>615</height>
+        </rect>
+       </property>
+       <attribute name="icon">
+        <iconset resource="aardwolf.qrc">
+         <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-apps-kspread.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-apps-kspread.svg.png</iconset>
+       </attribute>
+       <attribute name="label">
+        <string>Tags</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QTabWidget" name="tables">
+          <property name="tabPosition">
+           <enum>QTabWidget::East</enum>
+          </property>
+          <property name="currentIndex">
+           <number>-1</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="filters">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>290</width>
+         <height>615</height>
+        </rect>
+       </property>
+       <attribute name="icon">
+        <iconset resource="aardwolf.qrc">
+         <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-view-filter.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-view-filter.svg.png</iconset>
+       </attribute>
+       <attribute name="label">
+        <string>Filters</string>
+       </attribute>
+       <widget class="QGroupBox" name="FileFilter">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>261</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>File Filter</string>
+        </property>
+        <widget class="QRadioButton" name="FileFilter_1">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>102</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>All</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="FileFilter_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>60</y>
+           <width>102</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Tagged</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="FileFilter_3">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>90</y>
+           <width>102</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Untagged</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="DirFilter">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>140</y>
+          <width>261</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Folder Filter</string>
+        </property>
+        <widget class="QRadioButton" name="DirFilter_1">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>102</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>All</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="DirFilter_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>60</y>
+           <width>102</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Tagged</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="DirFilter_3">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>90</y>
+           <width>102</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Untagged</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QSplitter" name="splitter_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QDeclarativeView" name="LimooContainer">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>800</width>
+         <height>600</height>
+        </size>
+       </property>
+       <property name="resizeMode">
+        <enum>QDeclarativeView::SizeRootObjectToView</enum>
+       </property>
+      </widget>
+      <widget class="QSplitter" name="splitter">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="QTabWidget" name="MetaInfoTab">
+        <property name="styleSheet">
+         <string notr="true">padding:0px</string>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="metadata">
+         <attribute name="title">
+          <string>EXIF</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QTextEdit" name="exif">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <family>Arial Narrow</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border: 0px;
+background-color: &quot;white&quot;</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QTabWidget" name="InfoTab">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="logTab">
+         <attribute name="title">
+          <string>Log</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="1" column="1">
+           <widget class="QRadioButton" name="radio_log_debug">
+            <property name="text">
+             <string>Debug</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="radio_log_off">
+            <property name="text">
+             <string>Off</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QTextEdit" name="log">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QRadioButton" name="radio_log_error">
+            <property name="text">
+             <string>Error</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QSpinBox" name="page">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="pageLabel">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="status">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+   <zorder>AardwolfTools</zorder>
+   <zorder>splitter_2</zorder>
+   <zorder>historyBar</zorder>
+   <zorder>status</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1426</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuRecent_Projects">
+     <property name="title">
+      <string>Recent Projects</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/aardwolf/Files/icons/oxygen/file-recent-project.png</normaloff>:/aardwolf/Files/icons/oxygen/file-recent-project.png</iconset>
+     </property>
+    </widget>
+    <addaction name="action_New_Project"/>
+    <addaction name="action_Open_Project"/>
+    <addaction name="menuRecent_Projects"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose_Project"/>
+   </widget>
+   <widget class="QMenu" name="menuProject">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string>Project</string>
+    </property>
+    <widget class="QMenu" name="menuTag">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Tags</string>
+     </property>
+     <addaction name="actionCreateTag"/>
+     <addaction name="separator"/>
+    </widget>
+    <widget class="QMenu" name="menuCameras">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Cameras</string>
+     </property>
+     <addaction name="actionNew_Camera"/>
+     <addaction name="separator"/>
+    </widget>
+    <addaction name="actionAdd_Photographs"/>
+    <addaction name="actionImport_Images"/>
+    <addaction name="separator"/>
+    <addaction name="menuCameras"/>
+    <addaction name="separator"/>
+    <addaction name="menuTag"/>
+    <addaction name="separator"/>
+    <addaction name="actionReports"/>
+    <addaction name="separator"/>
+    <addaction name="actionPartitions"/>
+   </widget>
+   <widget class="QMenu" name="menuData">
+    <property name="title">
+     <string>Data</string>
+    </property>
+    <addaction name="actionView"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuImages">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Images</string>
+     </property>
+     <addaction name="actionPreview"/>
+     <addaction name="actionFilmstrip"/>
+    </widget>
+    <widget class="QMenu" name="menuViewTag">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Tag Groups</string>
+     </property>
+    </widget>
+    <widget class="QMenu" name="menuGrouping">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Grouping</string>
+     </property>
+     <addaction name="actionNone"/>
+     <addaction name="actionAuto"/>
+     <addaction name="separator"/>
+    </widget>
+    <addaction name="menuImages"/>
+    <addaction name="separator"/>
+    <addaction name="menuViewTag"/>
+    <addaction name="separator"/>
+    <addaction name="menuGrouping"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuProject"/>
+   <addaction name="menuData"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="fileToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QToolBar" name="projectToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QToolBar" name="viewToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QToolBar" name="dataToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <action name="action_New_Project">
+   <property name="icon">
+    <iconset resource="aardwolf.qrc">
+     <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-document-new.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-document-new.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>New Project</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new Aardwolf project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_Open_Project">
+   <property name="icon">
+    <iconset resource="aardwolf.qrc">
+     <normaloff>:/aardwolf/Files/icons/aardwolf.png</normaloff>:/aardwolf/Files/icons/aardwolf.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Project</string>
+   </property>
+   <property name="toolTip">
+    <string>Open an existing Aardwolf project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionClose_Project">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="aardwolf.qrc">
+     <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-dialog-close.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-dialog-close.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionNew_Camera">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="aardwolf.qrc">
+     <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-devices-camera-photo.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-devices-camera-photo.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Camera</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionCreateTag">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="aardwolf.qrc">
+     <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-mail-mark-task.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-mail-mark-task.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>New Tag Group</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionAdd_Photographs">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="aardwolf.qrc">
+     <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-insert-image.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-insert-image.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Images</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionView">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="aardwolf.qrc">
+     <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-mimetypes-application-vnd.ms-excel.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-mimetypes-application-vnd.ms-excel.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>View</string>
+   </property>
+   <property name="iconText">
+    <string>View Data</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionPreview">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="aardwolf.qrc">
+     <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-view-list-icons.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-view-list-icons.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Icons</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionFilmstrip">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="aardwolf.qrc">
+     <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-view-filmstrip.svg copy.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-actions-view-filmstrip.svg copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Filmstrip</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionNone">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>None</string>
+   </property>
+  </action>
+  <action name="actionAuto">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Auto</string>
+   </property>
+  </action>
+  <action name="actionReports">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Reports</string>
+   </property>
+  </action>
+  <action name="actionPartitions">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Partition Manager</string>
+   </property>
+  </action>
+  <action name="actionImport_Images">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Import Images</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QDeclarativeView</class>
+   <extends>QGraphicsView</extends>
+   <header>QtDeclarative/QDeclarativeView</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="aardwolf.qrc"/>
+ </resources>
+ <connections/>
+ <slots>
+  <slot>splitterResized(int,int)</slot>
+ </slots>
+</ui>
