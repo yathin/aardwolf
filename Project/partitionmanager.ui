@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PartitionManager</class>
+ <widget class="QDialog" name="PartitionManager">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>448</width>
+    <height>329</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Partition Manager</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0" colspan="3">
+      <layout class="QHBoxLayout" name="hLayout">
+       <item>
+        <widget class="QTableView" name="activeView"/>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="vLayout">
+         <item>
+          <widget class="QToolButton" name="buttonInactive">
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../aardwolf.qrc">
+             <normaloff>:/Oxygen/Files/icons/oxygen/128px-Oxygen480-actions-go-previous.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/128px-Oxygen480-actions-go-previous.svg.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonActive">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../aardwolf.qrc">
+             <normaloff>:/Oxygen/Files/icons/oxygen/128px-Oxygen480-actions-go-next.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/128px-Oxygen480-actions-go-next.svg.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTableView" name="inactiveView"/>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QToolButton" name="buttonAddPartition">
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../aardwolf.qrc">
+         <normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-categories-applications-education-miscellaneous.svg.png</normaloff>:/Oxygen/Files/icons/oxygen/120px-Oxygen480-categories-applications-education-miscellaneous.svg.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <spacer name="hSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>388</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="closeButton">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../aardwolf.qrc"/>
+ </resources>
+ <connections/>
+</ui>
