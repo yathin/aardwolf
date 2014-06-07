@@ -3,6 +3,7 @@ CREATE VIEW
         data_basic AS
             SELECT
                         p.id AS photo_id,
+                        part.location AS fs_location,
                         c.name AS camera_name,
                         f.name AS folder_name,
                         p.name AS photo_name,
@@ -10,8 +11,8 @@ CREATE VIEW
                         group_concat('"' || t.group_name || '_' || t.name || '": "' || t.value || '"') AS tags
                     FROM camera c
                     LEFT JOIN folder f ON c.id = f.camera_id
+                    LEFT JOIN partition part ON part.id = f.partition_id
                     LEFT JOIN photo p ON p.folder_id = f.id
                     LEFT JOIN tag t ON t.photo_id = p.id
                     GROUP BY t.photo_id
                     HAVING t.photo_id IS NOT NULL;
-
