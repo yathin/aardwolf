@@ -3,7 +3,7 @@
 #include <QHash>
 #include <QPainter>
 
-QHash<QString,QPixmap> provider_pixmap_hash;
+static QHash<QString,QPixmap> provider_pixmap_hash;
 
 ImageProvider::ImageProvider() :
     QDeclarativeImageProvider(QDeclarativeImageProvider::Pixmap)
@@ -46,4 +46,5 @@ QPixmap ImageProvider::requestPixmap(const QString & id, QSize *size, const QSiz
 
 ImageProvider::~ImageProvider()
 {
+    provider_pixmap_hash.clear();
 }

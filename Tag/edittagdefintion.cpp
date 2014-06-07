@@ -31,19 +31,20 @@
 #include "ui_edittagdefintion.h"
 
 EditTagDefinition::EditTagDefinition(const QString& groupName, QWidget *parent) :
+    QDialog(parent),
     ui(new Ui::EditTagDefinition),
     uiTag(new Ui::CreateTag),
     model_(0),
     isCreated_(false),
     groupName_(groupName),
     filter_(0),
-    createTag_(0),
-    QDialog(parent)
+    createTag_(0)
 {
     ui->setupUi(this);
 
     createTag_ = new QWidget;
     uiTag->setupUi(createTag_);
+    uiTag->name->setFocus();
     connect(uiTag->buttonAdd, SIGNAL(clicked()), this, SLOT(on_buttonAdd_clicked()));
     connect(uiTag->buttonCancel, SIGNAL(clicked()), this, SLOT(on_buttonCancel_clicked()));
     connect(uiTag->name, SIGNAL(editingFinished()), this, SLOT(on_uiTag_name_Edited()));
@@ -173,6 +174,7 @@ void EditTagDefinition::on_buttonAddTag_clicked()
     uiTag->shortcut->setText("");
     uiTag->type->setCurrentIndex(0);
     uiTag->label_XMP->setText("");
+    uiTag->name->setFocus();
     createTag_->show();
 }
 

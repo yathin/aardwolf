@@ -262,7 +262,7 @@ void ImageMeta::writeXMP()
     foreach (QString file, this->selectedPaths_)
     {
         qxtLog->debug() << "Writing to file: " << file;
-        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(file.toStdString());
+        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(file.toStdString().c_str());
         // assert (image.get() != 0);
         image->readMetadata();
         Exiv2::XmpData &xmpData = image->xmpData();

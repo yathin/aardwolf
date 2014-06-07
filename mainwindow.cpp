@@ -100,6 +100,7 @@ void MainWindow::setToolbars()
     this->ui->viewToolBar->addAction(this->ui->actionPreview);
     this->ui->viewToolBar->addWidget(this->ui->zoomLabel);
     this->ui->viewToolBar->addWidget(this->ui->thumbnailSize);
+    this->ui->viewToolBar->setMaximumHeight(96);
 
     this->ui->projectToolBar->addAction(this->ui->actionNew_Camera);
     this->ui->projectToolBar->addAction(this->ui->actionCreateTag);
@@ -144,7 +145,7 @@ void MainWindow::closeLimoo()
         return;
 
     disconnect(i, SLOT(imageLoaded(int,QString,QString)));
-    disconnect(i, SLOT(imageLoaded(QVector<uint>,QVector<QString>,QString)));
+    disconnect(i, SLOT(imageLoaded(QVector<int>,QVector<QString>,QString)));
     disconnect(i, SLOT(imageClosed()));
 
     delete w;

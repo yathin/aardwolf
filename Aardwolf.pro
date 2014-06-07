@@ -31,6 +31,13 @@ QT       += core gui declarative sql xml
 TARGET = Aardwolf
 TEMPLATE = app
 
+#QMAKE_CXX = clang++
+#QMAKE_CC = clang
+#QMAKE_RUN_CXX = $(CXX) $(CXXFLAGS) $(INCPATH) -c $src -o $obj
+#QMAKE_RUN_CC = $(CC) $(CCFLAGS) $(INCPATH) -c $src -o $obj
+
+QMAKE_CFLAGS += -mmacosx-version-min=10.9
+QMAKE_CXXFLAGS += -mmacosx-version-min=10.9
 
 win32 {
     CONFIG      += static staticlib qxt
@@ -45,11 +52,11 @@ win32 {
 
 
 macx{
-    INCLUDEPATH  += /usr/local/include
-    LIBS         += -L/usr/local/lib -lexiv2 -lsqlite3
-    QXT          += core
-    CONFIG       += qxt
+    CONFIG       += static staticlib qxt
+    INCLUDEPATH  += /usr/local/include /usr/local/Qxt/include/QxtCore/
+    LIBS         += -L/usr/local/lib  /usr/local/lib/libexiv2.a -lsqlite3 -lexpat -lz -liconv
     ICON          = pics/icon.icns
+    QXT          += core
 }
 
 SOURCES += main.cpp \

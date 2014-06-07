@@ -45,13 +45,19 @@ Folders::Folders()
 void Folders::refresh()
 {
     this->folderModel_ = QSharedPointer< QSqlQueryModel >(new QSqlQueryModel);
-    QString query = "SELECT * FROM folder f LEFT JOIN folder_tagged ft ON f.id = ft.folder_id ";
+    QString query = "SELECT * FROM folder f ";
 
     Filter::FilterType currentFilter = Filter::instance().folderFilter();
-    if (currentFilter == Filter::FilterTagged)
-        query += " WHERE images_all != 0 AND images_all = images_done ";
-    else if (currentFilter == Filter::FilterUntagged)
-        query += " WHERE images_all != 0 AND images_all <> images_done OR images_done IS NULL";
+
+    if (currentFilter != Filter::FilterAll)
+    {
+        query += " LEFT JOIN folder_tagged ft ON f.id = ft.folder_id ";
+
+        if (currentFilter == Filter::FilterTagged)
+            query += " WHERE images_all != 0 AND images_all = images_done ";
+        else if (currentFilter == Filter::FilterUntagged)
+            query += " WHERE images_all != 0 AND images_all <> images_done OR images_done IS NULL";
+    }
 
     qxtLog->debug() << "Folder Query: " << query;
     this->folderModel_->setQuery(query);

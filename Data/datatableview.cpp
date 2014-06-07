@@ -20,7 +20,7 @@
 
 #include <QSqlQuery>
 #include <QFileDialog>
-#include <QxtCore/QxtJSON>
+#include <QxtJSON>
 
 #include "Helpers/mediator.h"
 
@@ -34,7 +34,7 @@ DataTableView::DataTableView(QWidget *parent) :
 {
     ui->setupUi(this);
     queryModel_ = new QSqlQueryModel;
-    queryModel_->setQuery("SELECT photo_id, camera_name, folder_name, photo_name, photo_time, tags FROM data_basic LIMIT 1000");
+    queryModel_->setQuery("SELECT photo_id, fs_location, camera_name, folder_name, photo_name, photo_time, tags FROM data_basic LIMIT 1000");
     this->ui->table->setModel(queryModel_);
     this->ui->table->horizontalHeader()->setResizeMode(5, QHeaderView::Stretch);
 }
@@ -84,6 +84,7 @@ void DataTableView::on_buttonExportCVS_clicked()
 
     QVector< QString > columnNames;
     columnNames.push_back("photo_id");
+    columnNames.push_back("fs_location");
     columnNames.push_back("camera_name");
     columnNames.push_back("folder_name");
     columnNames.push_back("photo_name");
@@ -105,7 +106,7 @@ void DataTableView::on_buttonExportCVS_clicked()
     this->vectorToCSVFile(out, columnNames);
 
     QSqlQuery query;
-    query.prepare("SELECT photo_id, camera_name, folder_name, photo_name, photo_time, tags FROM data_basic");
+    query.prepare("SELECT photo_id, fs_location, camera_name, folder_name, photo_name, photo_time, tags FROM data_basic");
     query.exec();
     while (query.next())
     {

@@ -107,8 +107,8 @@ bool ThumbnailBarItem::setPixmap(const QString & path)
     int orientation = 1;
     QString exiv_data_str;
 
-    Exiv2::Image::AutoPtr exiv = Exiv2::ImageFactory::open(path.toUtf8().constData());
-        exiv->readMetadata();
+    Exiv2::Image::AutoPtr exiv = Exiv2::ImageFactory::open((const char *)(path.toUtf8().constData()));
+    exiv->readMetadata();
 
     Exiv2::ExifData data = exiv->exifData();
     std::ostringstream ostr;
