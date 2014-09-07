@@ -51,6 +51,8 @@ private:
     QSqlQueryModel *partitionModel_;
     QModelIndex     selectedCameraIndex_;
     QString         cameraName_;
+
+    void            doDownload();
 };
 
 #endif // DOWNLOAD_H

@@ -23,6 +23,7 @@
 #include <QProgressDialog>
 #include <QSqlRecord>
 #include <QTime>
+#include <QtConcurrentRun>
 
 
 #include "Folder/folder.h"
@@ -93,7 +94,7 @@ void Download::on_cameraList_pressed(const QModelIndex &index)
     }
 }
 
-void Download::on_buttonDownload_clicked()
+void Download::doDownload()
 {
     // Choose Partition
     QModelIndex partitionIndex = this->ui->destination->currentIndex();
@@ -136,7 +137,7 @@ void Download::on_buttonDownload_clicked()
     if (QDir(destinationDir + "/" + "tmp.aardwolf").exists())
         destDir.rmdir("tmp.aardwolf");
     destDir.mkdir("tmp.aardwolf");
-    qxtLog->debug() << "Copying to destination: " << destinationDir;
+    qxtLog->debug() << "Copying " << list.count() << " files to destination: " << destinationDir;
 
     QProgressDialog progress(tr("Copying..."),
                              tr("Abort"),
@@ -151,6 +152,7 @@ void Download::on_buttonDownload_clicked()
     Exiv2::ExifKey dateTimeOriginal("Exif.Photo.DateTimeOriginal");
     Exiv2::ExifKey dateTimeDefault ("Exif.Image.DateTime");
 
+
     for (QStringList::iterator i = list.begin(); i != list.end(); i++)
     {
         progress.setValue(++completed);
@@ -158,24 +160,45 @@ void Download::on_buttonDownload_clicked()
             return;
 
         QFile::copy(sourceDir + tr("/") + *i, destinationDir+"/tmp.aardwolf/" + *i);
-        progress.setValue(++completed);
 
-        Exiv2::Image::AutoPtr exiv = Exiv2::ImageFactory::open( QString(destinationDir+"/tmp.aardwolf/" + *i).toStdString() );
-        exiv->readMetadata();
-        Exiv2::ExifData data = exiv->exifData();
+        try
+        {
+            Exiv2::Image::AutoPtr exiv = Exiv2::ImageFactory::open( QString(destinationDir+"/tmp.aardwolf/" + *i).toStdString() );
+            exiv->readMetadata();
+            Exiv2::ExifData data = exiv->exifData();
 
-        Exiv2::Value::AutoPtr v = Exiv2::Value::create(Exiv2::asciiString);;
-        if      (data.findKey(dateTimeOriginal) != data.end())
-        {
-            v = (data.findKey(dateTimeOriginal))->getValue();
+            Exiv2::Value::AutoPtr v = Exiv2::Value::create(Exiv2::asciiString);;
+            if      (data.findKey(dateTimeOriginal) != data.end())
+            {
+                v = (data.findKey(dateTimeOriginal))->getValue();
+            }
+            else if (data.findKey(dateTimeDefault ) != data.end())
+            {
+                v = (data.findKey(dateTimeDefault ))->getValue();
+            }
+            QString dateTime(v->toString().c_str());
+            dateTimeList.append(dateTime);
         }
-        else if (data.findKey(dateTimeDefault ) != data.end())
+        catch(...)
         {
-            v = (data.findKey(dateTimeDefault ))->getValue();
+            QString error = "Aborting copy. Could not read file: ";
+            error += *i;
+            error += ". Please check image or contact developer.";
+            QMessageBox::critical(this, "Aborting", error, QMessageBox::Ok);
+            return;
         }
-        QString dateTime(v->toString().c_str());
-        dateTimeList.append(dateTime);
     }
+
+    progress.hide();
+
+    QProgressDialog waitForComplete(tr("Writing to database. Please Wait."),
+                             NULL,
+                             0,
+                             0,
+                             this
+                             );
+    waitForComplete.setWindowModality(Qt::WindowModal);
+    waitForComplete.show();
 
     // Move tmp dir to real place.
     QString toDir = srcDir.dirName();
@@ -194,9 +217,16 @@ void Download::on_buttonDownload_clicked()
     f.imagesAll = list.count();
     Folders::instance().addFolder(f, list, dateTimeList);
 
+    waitForComplete.close();
+
     // Clear out fields
     ui->source->clear();
     ui->buttonDownload->setEnabled(false);
+}
+
+void Download::on_buttonDownload_clicked()
+{
+    doDownload();
 }
 
 void Download::on_buttonClose_clicked()
