@@ -94,7 +94,7 @@ void ImageMeta::show()
                 dynamic_cast< QCheckBox * >(widget_[m][pm.name])->setShortcut(pm.shortcut);
                 layout_[m]->addWidget(dynamic_cast< QCheckBox *>(widget_[m][pm.name]));
             }
-            else if (pm.valueType == "Text")
+            else // if (pm.valueType == "Text")
             {
                 widget_[m][pm.name] = new QLineEdit();
                 widget_[m][pm.name]->setObjectName(m + "___" + pm.name);

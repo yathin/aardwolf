@@ -215,11 +215,11 @@ void EditTagDefinition::on_buttonAdd_clicked()
     // NOTE: QT does not set default values for fields that are not set here.
     // TODO: Fix above 'bug' (not really used anywhere, so low priority)
     QSqlRecord record = model_->record();
-    record.setValue("group_name", ui->groupName->text());
-    record.setValue("name", uiTag->name->text());
-    record.setValue("shortcut", uiTag->shortcut->text());
-    record.setValue("value_type", uiTag->type->currentText());
-    record.setValue("xmp_name", uiTag->label_XMP->text());
+    record.setValue("group_name",   ui->groupName->text());
+    record.setValue("name",         uiTag->name->text());
+    record.setValue("shortcut",     uiTag->shortcut->text());
+    record.setValue("value_type",   uiTag->type->currentText());
+    record.setValue("xmp_name",     uiTag->label_XMP->text());
     this->model_->insertRecord(-1, record);
     createTag_->hide();
 }
