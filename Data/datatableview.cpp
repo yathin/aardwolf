@@ -106,19 +106,20 @@ void DataTableView::on_buttonExportCVS_clicked()
     this->vectorToCSVFile(out, columnNames);
 
     QSqlQuery query;
+    register int numFields = 7;
     query.prepare("SELECT photo_id, fs_location, camera_name, folder_name, photo_name, photo_time, tags FROM data_basic");
     query.exec();
     while (query.next())
     {
         QVector< QString > row;
         row.resize(columnNames.size());
-        for (int columnCount = 0; columnCount <= 4; ++columnCount)
+        for (int columnCount = 0; columnCount <= numFields-2; ++columnCount)
         {
             row[columnCount] = query.value(columnCount).toString();
             row[columnCount] = query.value(columnCount).toString();
         }
 
-        QString tagsJson = QString("{") + query.value(5).toString() + QString("}");
+        QString tagsJson = QString("{") + query.value(numFields-1).toString() + QString("}");
         QVariant tags = QxtJSON::parse(tagsJson);
         foreach (QString key, tags.toMap().keys())
         {
