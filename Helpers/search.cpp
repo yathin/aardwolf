@@ -69,8 +69,8 @@ void Search::search(const QString &searchTerm, FileList &fileList, int cameraID,
         f.id        = query.value(0).toUInt();
         f.folderID  = query.value(1).toUInt();
         f.name      = query.value(2).toString();
-        f.updatedOn = query.value(3).toUInt();
-        f.updatedBy = query.value(4).toUInt();
+        f.updatedOn = query.value(5).toUInt();
+        f.updatedBy = query.value(6).toUInt();
 
         fileList.push_back(f);
     }

@@ -112,9 +112,12 @@ void FileManager::openDir(const QString &dirName)
     switch (currentLevel_)
     {
         case LevelProject:
-            qxtLog->debug() << "Setting up Project Cameras...";
+            qxtLog->debug() << "Setting up Project Cameras in dir: " << dirName;
             for (CameraList::const_iterator camera = Cameras::instance().getCameraList().begin(); camera != Cameras::instance().getCameraList().end(); ++camera)
             {
+                if (camera->name.isEmpty())
+                    continue;
+                qxtLog->debug() << "Attempting to add Camera: " << dirName << "/" << camera->name;
                 if (QFile(dirName + "/" + camera->name).exists())
                     cameraList.append(dirName + "/" + camera->name);
             }
